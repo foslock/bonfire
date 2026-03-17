@@ -40,7 +40,7 @@ const Sky = (() => {
     function drawMoon(w, h) {
         const moonX = w * 0.8;
         const moonY = h * 0.15;
-        const radius = Math.min(w, h) * 0.04;
+        const radius = Math.min(w, h) * 0.08;
 
         // Glow
         const glow = ctx.createRadialGradient(moonX, moonY, radius * 0.5, moonX, moonY, radius * 3);

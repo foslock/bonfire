@@ -48,19 +48,22 @@ const Knights = (() => {
         const vw = window.innerWidth;
         const vh = window.innerHeight;
         const centerX = vw / 2;
-        const centerY = vh * 0.40;  // just above bonfire center
-        const radius = Math.min(vw * 0.3, 300);
+        // Place arc center at fire/ground level so knights sit on the ground
+        const centerY = vh * 0.64;
+        const radius = Math.min(vw * 0.30, 300);
 
         for (let i = 0; i < n; i++) {
             const angle = (-60 + (120 / (n + 1)) * (i + 1)) * (Math.PI / 180);
             const x = centerX + Math.sin(angle) * radius;
-            const y = centerY - Math.cos(angle) * radius * 0.3;  // perspective squish
-            const scale = 1.0 - Math.abs(angle) * 0.15;
+            // Perspective squish: behind-fire knights are higher on screen
+            const y = centerY - Math.cos(angle) * radius * 0.35;
+            const scale = 1.0 - Math.abs(angle) * 0.12;
 
             const el = knightElements[ids[i]];
             el.style.left = `${x}px`;
             el.style.top = `${y}px`;
-            el.style.transform = `translate(-50%, -50%) scale(${scale})`;
+            // Anchor bottom of element at y so feet touch the ground
+            el.style.transform = `translate(-50%, -100%) scale(${scale})`;
         }
     }
 
