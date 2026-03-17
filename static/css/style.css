@@ -1,0 +1,202 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #0a0a0f;
+    font-family: 'MedievalSharp', cursive;
+    cursor: default;
+    user-select: none;
+}
+
+/* Sky canvas — top portion */
+#sky-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    z-index: 1;
+}
+
+/* Ground — bottom portion */
+#ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(
+        to bottom,
+        #0a0a0f 0%,
+        #1a1410 15%,
+        #1e1812 40%,
+        #221c14 100%
+    );
+    z-index: 2;
+}
+
+/* Ground texture overlay */
+#ground::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/static/sprites/ground.png');
+    background-size: cover;
+    background-position: center top;
+    opacity: 0.6;
+}
+
+/* Bonfire area — centered */
+#bonfire-area {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 350px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+#bonfire-sprite {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    height: auto;
+    image-rendering: auto;
+    z-index: 1;
+}
+
+#fire-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Knights container */
+#knights-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.knight {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.knight img {
+    width: 120px;
+    height: auto;
+    image-rendering: auto;
+}
+
+.knight-name {
+    margin-top: 4px;
+    color: #c8b07a;
+    font-size: 14px;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+    white-space: nowrap;
+}
+
+/* Powder effect overlay */
+#powder-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    pointer-events: none;
+}
+
+/* HUD overlay */
+#hud {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 30;
+    pointer-events: none;
+}
+
+#my-name {
+    color: #e8d5a3;
+    font-size: 28px;
+    text-shadow:
+        0 0 10px rgba(255, 180, 50, 0.5),
+        0 0 30px rgba(255, 120, 20, 0.2);
+    letter-spacing: 2px;
+}
+
+#prompt {
+    color: #887755;
+    font-size: 16px;
+    margin-top: 8px;
+    opacity: 1;
+    transition: opacity 2s ease;
+}
+
+#prompt.hidden {
+    opacity: 0;
+}
+
+/* Warm ambient glow around the center */
+#bonfire-area::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 150, 50, 0.08) 0%,
+        rgba(255, 100, 20, 0.03) 40%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Vignette effect */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 50%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+    pointer-events: none;
+    z-index: 25;
+}
