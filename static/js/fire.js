@@ -28,13 +28,13 @@ const Fire = (() => {
              + smoothNoise(t * 4.5 + 7.3) * 0.2;
     }
 
-    // Base fire color palette (white-hot core → dark red tip)
+    // Base fire color palette — warm entries used for tongues and particles
     const BASE_COLORS = [
-        { stop: 0.00, color: 'rgba(255, 255, 200, 0.90)' },
-        { stop: 0.30, color: 'rgba(255, 190,  35, 0.82)' },
-        { stop: 0.60, color: 'rgba(240, 100,  15, 0.60)' },
-        { stop: 0.88, color: 'rgba(170,  30,   5, 0.30)' },
-        { stop: 1.00, color: 'rgba( 80,   8,   0, 0.00)' },
+        { r: 255, g: 240, b: 180 },  // white-yellow center
+        { r: 255, g: 200, b: 60  },  // yellow
+        { r: 255, g: 140, b: 30  },  // orange
+        { r: 220, g: 80,  b: 20  },  // red-orange
+        { r: 150, g: 30,  b: 10  },  // dark red
     ];
 
     // --- Flame tongue configs (generated once) ---
@@ -142,10 +142,17 @@ const Fire = (() => {
                                 0,             0);
             ctx.closePath();
 
-            // Color gradient from BASE_COLORS palette (optionally powder-blended)
+            // Build tongue gradient from BASE_COLORS (base → tip = index 0 → last)
             const grad = ctx.createLinearGradient(0, 0, 0, -height);
-            for (const { stop, color } of BASE_COLORS) {
-                grad.addColorStop(stop, color);
+            const alphas = [0.90, 0.82, 0.60, 0.30, 0.00];
+            const stops  = [0.00, 0.30, 0.60, 0.88, 1.00];
+            for (let ci = 0; ci < BASE_COLORS.length; ci++) {
+                const c = (powderColor && powderFrames > 0)
+                    ? { r: lerp(BASE_COLORS[ci].r, powderColor.r, powderFrames / 60),
+                        g: lerp(BASE_COLORS[ci].g, powderColor.g, powderFrames / 60),
+                        b: lerp(BASE_COLORS[ci].b, powderColor.b, powderFrames / 60) }
+                    : BASE_COLORS[ci];
+                grad.addColorStop(stops[ci], `rgba(${c.r}, ${c.g}, ${c.b}, ${alphas[ci]})`);
             }
             ctx.fillStyle = grad;
             ctx.fill();
