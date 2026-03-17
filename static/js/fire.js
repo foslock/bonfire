@@ -28,6 +28,15 @@ const Fire = (() => {
              + smoothNoise(t * 4.5 + 7.3) * 0.2;
     }
 
+    // Base fire color palette (white-hot core → dark red tip)
+    const BASE_COLORS = [
+        { stop: 0.00, color: 'rgba(255, 255, 200, 0.90)' },
+        { stop: 0.30, color: 'rgba(255, 190,  35, 0.82)' },
+        { stop: 0.60, color: 'rgba(240, 100,  15, 0.60)' },
+        { stop: 0.88, color: 'rgba(170,  30,   5, 0.30)' },
+        { stop: 1.00, color: 'rgba( 80,   8,   0, 0.00)' },
+    ];
+
     // --- Flame tongue configs (generated once) ---
     const TONGUE_COUNT = 9;
     const tongues = Array.from({ length: TONGUE_COUNT }, (_, i) => ({
@@ -133,22 +142,10 @@ const Fire = (() => {
                                 0,             0);
             ctx.closePath();
 
-            // Color: white-yellow base → orange → dark red tip (all luminous via 'lighter')
+            // Color gradient from BASE_COLORS palette (optionally powder-blended)
             const grad = ctx.createLinearGradient(0, 0, 0, -height);
-            if (powderColor && powderFrames > 0) {
-                const b = powderFrames / 60;
-                const pr = powderColor.r, pg = powderColor.g, pb = powderColor.b;
-                grad.addColorStop(0.00, `rgba(${lerp(255,pr,b)}, ${lerp(255,pg,b)}, ${lerp(200,pb,b)}, 0.90)`);
-                grad.addColorStop(0.30, `rgba(${lerp(255,pr,b)}, ${lerp(190,pg,b)}, ${lerp(35,pb,b)}, 0.82)`);
-                grad.addColorStop(0.60, `rgba(${lerp(240,pr,b)}, ${lerp(100,pg,b)}, ${lerp(15,pb,b)}, 0.60)`);
-                grad.addColorStop(0.88, `rgba(${lerp(170,pr,b)}, ${lerp(30,pg,b)}, ${lerp(5,pb,b)}, 0.30)`);
-                grad.addColorStop(1.00, `rgba(${lerp(80,pr,b)},  ${lerp(8,pg,b)},  ${lerp(0,pb,b)},  0.00)`);
-            } else {
-                grad.addColorStop(0.00, 'rgba(255, 255, 200, 0.90)');
-                grad.addColorStop(0.30, 'rgba(255, 190,  35, 0.82)');
-                grad.addColorStop(0.60, 'rgba(240, 100,  15, 0.60)');
-                grad.addColorStop(0.88, 'rgba(170,  30,   5, 0.30)');
-                grad.addColorStop(1.00, 'rgba( 80,   8,   0, 0.00)');
+            for (const { stop, color } of BASE_COLORS) {
+                grad.addColorStop(stop, color);
             }
             ctx.fillStyle = grad;
             ctx.fill();
