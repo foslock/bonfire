@@ -5,7 +5,7 @@ from quart import current_app
 pool: asyncpg.Pool | None = None
 
 SCHEMA = """
-CREATE TABLE IF NOT EXISTS sessions (
+CREATE TABLE IF NOT EXISTS bonfire_sessions (
     id          UUID PRIMARY KEY,
     knight_name TEXT NOT NULL,
     sprite_id   SMALLINT NOT NULL,

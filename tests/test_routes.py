@@ -115,7 +115,7 @@ async def test_index_with_db_creates_session(client):
     # Should have called execute to INSERT the new session
     mock_pool.execute.assert_called_once()
     call_args = mock_pool.execute.call_args
-    assert "INSERT INTO sessions" in call_args[0][0]
+    assert "INSERT INTO bonfire_sessions" in call_args[0][0]
 
 
 @pytest.mark.asyncio
@@ -141,7 +141,7 @@ async def test_index_existing_session_touches_last_seen(client):
     # Should have called execute for UPDATE last_seen
     mock_pool.execute.assert_called_once()
     call_args = mock_pool.execute.call_args
-    assert "UPDATE sessions SET last_seen" in call_args[0][0]
+    assert "UPDATE bonfire_sessions SET last_seen" in call_args[0][0]
 
 
 @pytest.mark.asyncio

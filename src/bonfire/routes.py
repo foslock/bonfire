@@ -24,12 +24,12 @@ async def index():
 
     if session_id and db.pool:
         row = await db.pool.fetchrow(
-            "SELECT id, knight_name, sprite_id, color_index FROM sessions WHERE id = $1",
+            "SELECT id, knight_name, sprite_id, color_index FROM bonfire_sessions WHERE id = $1",
             session_id,
         )
         if row:
             await db.pool.execute(
-                "UPDATE sessions SET last_seen = now() WHERE id = $1", session_id
+                "UPDATE bonfire_sessions SET last_seen = now() WHERE id = $1", session_id
             )
         else:
             session_id = None
@@ -42,7 +42,7 @@ async def index():
         new_cookie = True
         if db.pool:
             await db.pool.execute(
-                """INSERT INTO sessions (id, knight_name, sprite_id, color_index)
+                """INSERT INTO bonfire_sessions (id, knight_name, sprite_id, color_index)
                    VALUES ($1, $2, $3, $4)""",
                 session_id, knight_name, sprite_id, color_index,
             )
