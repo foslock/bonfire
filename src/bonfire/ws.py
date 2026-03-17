@@ -42,7 +42,7 @@ async def ws_handler():
         return
 
     row = await db.pool.fetchrow(
-        "SELECT id, knight_name, sprite_id, color_index FROM sessions WHERE id = $1",
+        "SELECT id, knight_name, sprite_id, color_index FROM bonfire_sessions WHERE id = $1",
         session_uuid,
     )
     if not row:
@@ -63,7 +63,7 @@ async def ws_handler():
         except ValueError:
             continue
         other_row = await db.pool.fetchrow(
-            "SELECT knight_name, sprite_id FROM sessions WHERE id = $1", sid_uuid
+            "SELECT knight_name, sprite_id FROM bonfire_sessions WHERE id = $1", sid_uuid
         )
         if other_row:
             other_users.append({
