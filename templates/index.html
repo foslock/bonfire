@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonfire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Sky with stars and moon -->
+    <canvas id="sky-canvas"></canvas>
+
+    <!-- Ground area -->
+    <div id="ground"></div>
+
+    <!-- Knights container -->
+    <div id="knights-container"></div>
+
+    <!-- Bonfire base sprite -->
+    <div id="bonfire-area">
+        <img id="bonfire-sprite" src="/static/sprites/bonfire_base.png"
+             alt="" onerror="this.style.display='none'">
+        <!-- Fire particle canvas overlays the sprite -->
+        <canvas id="fire-canvas"></canvas>
+    </div>
+
+    <!-- Powder effect overlay -->
+    <canvas id="powder-canvas"></canvas>
+
+    <!-- HUD -->
+    <div id="hud">
+        <div id="my-name"></div>
+        <div id="prompt">Click the bonfire</div>
+    </div>
+
+    <script src="/static/js/ws.js"></script>
+    <script src="/static/js/sky.js"></script>
+    <script src="/static/js/fire.js"></script>
+    <script src="/static/js/knights.js"></script>
+    <script src="/static/js/powder.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
