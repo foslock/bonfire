@@ -38,12 +38,12 @@ const Fire = (() => {
     ];
 
     // --- Flame tongue configs (generated once) ---
-    const TONGUE_COUNT = 9;
+    const TONGUE_COUNT = 11;
     const tongues = Array.from({ length: TONGUE_COUNT }, (_, i) => ({
-        xOffset: (Math.random() - 0.5) * 44,
+        xOffset: (Math.random() - 0.5) * 90,
         noiseOff: Math.random() * 100,
-        baseH: 55 + Math.random() * 75,
-        baseW: 7 + Math.random() * 9,
+        baseH: 90 + Math.random() * 110,
+        baseW: 14 + Math.random() * 20,
     }));
 
     function init(canvasEl) {
@@ -73,26 +73,26 @@ const Fire = (() => {
     function newParticle() {
         const { cx, cy } = dims();
         return {
-            x: cx + (Math.random() - 0.5) * 48,
-            y: cy + (Math.random() - 0.5) * 8,
+            x: cx + (Math.random() - 0.5) * 70,
+            y: cy + (Math.random() - 0.5) * 10,
             vx: (Math.random() - 0.5) * 0.7,
-            vy: -(Math.random() * 2.8 + 0.9),
+            vy: -(Math.random() * 3.2 + 1.2),
             life: 0,
-            maxLife: Math.random() * 40 + 18,
-            size: Math.random() * 5 + 2,
+            maxLife: Math.random() * 45 + 20,
+            size: Math.random() * 6 + 2.5,
             noiseOff: Math.random() * 500,
         };
     }
 
     function resetParticle(p) {
         const { cx, cy } = dims();
-        p.x = cx + (Math.random() - 0.5) * 48;
-        p.y = cy + (Math.random() - 0.5) * 8;
+        p.x = cx + (Math.random() - 0.5) * 70;
+        p.y = cy + (Math.random() - 0.5) * 10;
         p.vx = (Math.random() - 0.5) * 0.7;
-        p.vy = -(Math.random() * 2.8 + 0.9);
+        p.vy = -(Math.random() * 3.2 + 1.2);
         p.life = 0;
-        p.maxLife = Math.random() * 40 + 18;
-        p.size = Math.random() * 5 + 2;
+        p.maxLife = Math.random() * 45 + 20;
+        p.size = Math.random() * 6 + 2.5;
         p.noiseOff = Math.random() * 500;
     }
 
@@ -113,6 +113,8 @@ const Fire = (() => {
 
         ctx.save();
         ctx.globalCompositeOperation = 'lighter';
+        ctx.shadowBlur = 18;
+        ctx.shadowColor = 'rgba(255, 140, 20, 0.6)';
 
         for (const cfg of tongues) {
             const tx = cx + cfg.xOffset;
@@ -189,7 +191,7 @@ const Fire = (() => {
         const glowColor = (powderColor && powderFrames > 0)
             ? `rgba(${powderColor.r}, ${powderColor.g}, ${powderColor.b}, 0.20)`
             : 'rgba(255, 130, 40, 0.20)';
-        const glow = ctx.createRadialGradient(cx, cy, 6, cx, cy, 115);
+        const glow = ctx.createRadialGradient(cx, cy, 6, cx, cy, 160);
         glow.addColorStop(0, glowColor);
         glow.addColorStop(1, 'transparent');
         ctx.fillStyle = glow;
